@@ -1,5 +1,6 @@
 from selenium import webdriver
-import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 import phonenumbers
 
 class InvalidPhoneError(Exception):
@@ -15,7 +16,17 @@ class WhatsappAutomation:
             raise InvalidPhoneError
 
         self.driver = webdriver.Firefox()
-        self.driver.get('https://web.whatsapp.com/send?phone=+34674305378')
+        self.driver.get(f'https://web.whatsapp.com/send?phone={phone}')
+
+        print('Read the QR code with your phone, please (this will only occur once).')
+
+        WebDriverWait(self.driver, 20).until(lambda s:s.find_element_by_id('side'))
+        self.driver.minimize_window()
+
+    def one_message(self, message, times=1):
+        inp = WebDriverWait(self.driver, 10).until(lambda s:s.find_element_by_css_selector('._1LbR4 > div:nth-child(2)'))
+        for _ in range(times):
+            inp.send_keys(message + Keys.ENTER)
 
     def quit(self):
         self.driver.quit()
