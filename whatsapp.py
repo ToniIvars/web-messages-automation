@@ -1,7 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
+
 from selenium.common.exceptions import TimeoutException
+
 import phonenumbers
 import time
 
@@ -55,14 +57,15 @@ class WhatsappAutomation:
         return f'{len(messages_list)} messages sent successfully'
 
     def quit(self):
+        print('Exiting...')
         self.driver.quit()
+        exit()
 
 if __name__ == '__main__':
-    import atexit
-
     phone = input('Insert the phone number with the county code: ')
     w = WhatsappAutomation(phone)
-    atexit.register(w.quit)
 
     message = input('Insert the message you want to send: ')
     print('\n' + w.one_message(message))
+
+    w.quit()
