@@ -25,15 +25,21 @@ class WhatsappAutomation:
         self.driver.get(f'https://web.whatsapp.com/send?phone={phone}')
 
         print('Read the QR code with your phone, please (this will only occur once).')
-        try:
+        try:           
             WebDriverWait(self.driver, 20).until(lambda s:s.find_element_by_id('side'))
             self.driver.minimize_window()
 
-            self.inp = WebDriverWait(self.driver, 10).until(lambda s:s.find_element_by_css_selector('._1LbR4 > div:nth-child(2)'))
+        except TimeoutException:
+            print('You have 20 seconds to read the QR code.')
+            self.quit()
+
+        try:
+            WebDriverWait(self.driver, 4).until(lambda s:s.find_element_by_class_name('_3J6wB'))
+            print('The phone probably does not exist or it is invalid.')
+            self.quit()
 
         except TimeoutException:
-            self.quit()
-            print('You have 20 seconds to read the QR code.')
+            self.inp = self.driver.find_element_by_css_selector('._1LbR4 > div:nth-child(2)')
 
     def one_message(self, message, times=1):
         if not message:
