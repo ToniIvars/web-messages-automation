@@ -93,18 +93,30 @@ class TelegramAutomation:
         return f'Recipient changed to: {recipient.text}'
 
     def send_message(self, message, times=1):
+        if not message:
+            return 'You have to enter a message'
+        if times < 1:
+            return 'The minimum times are 1'
+
         inp = self.driver.find_element_by_id('editable-message-text')
 
         for _ in range(times):
             inp.send_keys(message + Keys.ENTER)
             time.sleep(0.5)
+
+        return f'Message sent {times} times'
     
     def send_messages(self, messages):
+        if not messages or len(messages) < 2:
+            return 'You have to enter 2 or more messages'
+
         inp = self.driver.find_element_by_id('editable-message-text')
 
         for message in messages:
             inp.send_keys(message + Keys.ENTER)
             time.sleep(0.5)
+
+        return f'{len(messages)} messages sent'
 
     def quit(self):
         print('Exiting...')
