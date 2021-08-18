@@ -20,6 +20,8 @@ class TelegramAutomation:
 
         phone_input = WebDriverWait(self.driver, 5).until(lambda s: s.find_element_by_id('sign-in-phone-number'))
 
+        time.sleep(0.5)
+
         if not '34' in phone_input.get_attribute('value'):
             phone_input.send_keys('+34' + phone)
         else:
@@ -99,10 +101,12 @@ class TelegramAutomation:
             return 'The minimum times are 1'
 
         inp = self.driver.find_element_by_id('editable-message-text')
+        send_button = self.driver.find_element_by_css_selector('.send')
 
         for _ in range(times):
-            inp.send_keys(message + Keys.ENTER)
+            inp.send_keys(message)
             time.sleep(0.5)
+            send_button.click()
 
         return f'Message sent {times} times'
     
@@ -111,10 +115,12 @@ class TelegramAutomation:
             return 'You have to enter 2 or more messages'
 
         inp = self.driver.find_element_by_id('editable-message-text')
+        send_button = self.driver.find_element_by_css_selector('.send')
 
         for message in messages:
-            inp.send_keys(message + Keys.ENTER)
+            inp.send_keys(message)
             time.sleep(0.5)
+            send_button.click()
 
         return f'{len(messages)} messages sent'
 
@@ -129,5 +135,8 @@ if __name__ == '__main__':
 
     recipient = input('Recipient of the message: ')
     print(t.change_recipient(recipient))
+
+    message = input('Message: ')
+    print(t.send_message(message))
 
     t.quit()
