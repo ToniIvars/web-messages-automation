@@ -83,6 +83,20 @@ class TelegramAutomation:
 
         self.search_bar.send_keys(Keys.ENTER)
 
+    def send_message(self, message, times=1):
+        inp = self.driver.find_element_by_id('editable-message-text')
+
+        for _ in range(times):
+            inp.send_keys(message + Keys.ENTER)
+            time.sleep(0.5)
+    
+    def send_messages(self, messages):
+        inp = self.driver.find_element_by_id('editable-message-text')
+
+        for message in messages:
+            inp.send_keys(message + Keys.ENTER)
+            time.sleep(0.5)
+
     def quit(self):
         print('Exiting...')
         self.driver.quit()
