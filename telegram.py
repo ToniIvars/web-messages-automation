@@ -75,13 +75,22 @@ class TelegramAutomation:
         self.search_bar = WebDriverWait(self.driver, 10).until(lambda s: s.find_element_by_id('telegram-search-input'))
 
     def change_recipient(self, name):
+        if not name:
+            return 'You have to enter a name'
+
         self.search_bar.click()
         time.sleep(1)
         self.search_bar.send_keys(name)
 
-        WebDriverWait(self.driver, 5).until(lambda s: s.find_element_by_class_name('search-section'))
+        try:
+            WebDriverWait(self.driver, 5).until(lambda s: s.find_element_by_class_name('search-section'))
+        except TimeoutException:
+            return 'Name not found'
 
         self.search_bar.send_keys(Keys.ENTER)
+
+        recipient = self.driver.find_element_by_css_selector('.chat-info-wrapper > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h3:nth-child(1)')
+        return f'Recipient changed to: {recipient.text}'
 
     def send_message(self, message, times=1):
         inp = self.driver.find_element_by_id('editable-message-text')
@@ -107,6 +116,6 @@ if __name__ == '__main__':
     t = TelegramAutomation(phone)
 
     recipient = input('Recipient of the message: ')
-    t.change_recipient(recipient)
+    print(t.change_recipient(recipient))
 
     t.quit()
