@@ -7,6 +7,16 @@ from selenium.common.exceptions import TimeoutException
 import time
 from getpass import getpass
 
+class UsernameError(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
+
+class MessageError(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
+
 class TelegramAutomation:
     def __init__(self, phone):
         opt = Options()
@@ -78,7 +88,7 @@ class TelegramAutomation:
 
     def change_recipient(self, name):
         if not name:
-            return 'You have to enter a name'
+            raise UsernameError('You have to enter a name')
 
         self.search_bar.click()
         time.sleep(1)
@@ -87,7 +97,7 @@ class TelegramAutomation:
         try:
             WebDriverWait(self.driver, 5).until(lambda s: s.find_element_by_class_name('search-section'))
         except TimeoutException:
-            return 'Name not found'
+            raise UsernameError('Name not found')
 
         self.search_bar.send_keys(Keys.ENTER)
 
@@ -96,9 +106,9 @@ class TelegramAutomation:
 
     def send_message(self, message, times=1):
         if not message:
-            return 'You have to enter a message'
+            raise MessageError('You have to enter a message')
         if times < 1:
-            return 'The minimum times are 1'
+            raise MessageError('The minimum times are 1')
 
         inp = self.driver.find_element_by_id('editable-message-text')
         send_button = self.driver.find_element_by_css_selector('.send')
@@ -112,7 +122,7 @@ class TelegramAutomation:
     
     def send_messages(self, messages):
         if not messages or len(messages) < 2:
-            return 'You have to enter 2 or more messages'
+            raise MessageError('You have to enter 2 or more messages')
 
         inp = self.driver.find_element_by_id('editable-message-text')
         send_button = self.driver.find_element_by_css_selector('.send')
