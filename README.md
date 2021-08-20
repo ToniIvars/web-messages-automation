@@ -1,6 +1,16 @@
 # web-messages-automation
 Using this project you are able to automate WhatsApp and Telegram using their web services.
 
+## Pre-requisites
+This project is based on the use of Selenium, and it uses Firefox as the driver, so you must have [Firefox](https://www.mozilla.org/en-US/firefox/new/) installed and the [Geckodriver](https://github.com/mozilla/geckodriver/releases).
+
+You must have the Geckodriver in the path ([Windows](https://www.softwaretestinghelp.com/geckodriver-selenium-tutorial/#Steps_to_Add_a_Path_in_Systems_PATH_Environmental_Variable) or [Linux](https://stackoverflow.com/questions/41529561/mozila-geckodriver-path-for-ubuntu)), or pass the route where it is installed in the optional "path" argument:
+```python
+from whatsapp import WhatsappAutomation
+
+w = WhatsappAutomation(path='Path to the geckodriver')
+```
+
 ## Installation
 Run this commands:
 
