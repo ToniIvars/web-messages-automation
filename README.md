@@ -26,6 +26,8 @@ w.change_recipient('Any name') # Changing the recipient of the message by provid
 print(w.send_message('Hello', times=3)) # Send a message a number of times, default is 1 time
 
 print(w.send_messages(['Hi', 'How', 'Are', 'You'])) # Send 2 or more messages consecutively
+
+w.quit() # You have to quit the driver after you have finished the automation
 ```
 
 
@@ -40,4 +42,6 @@ t.change_recipient('Any name') # Changing the recipient of the message by provid
 print(t.send_message('Hello', times=3)) # Send a message a number of times, default is 1 time
 
 print(t.send_messages(['Hi', 'How', 'Are', 'You'])) # Send 2 or more messages consecutively
+
+t.quit() # You have to quit the driver after you have finished the automation
 ```
