@@ -35,7 +35,8 @@ w.quit() # You have to quit the driver after you have finished the automation
 ```python
 from telegram import TelegramAutomation
 
-t = TelegramAutomation('666666666') # Creating an instance of the class, passing your phone number as a string parameter
+t = TelegramAutomation('666666666') # Creating an instance of the class, passing your phone
+# number as a string parameter
 
 t.change_recipient('Any name') # Changing the recipient of the message by providing the name
 
@@ -44,4 +45,20 @@ print(t.send_message('Hello', times=3)) # Send a message a number of times, defa
 print(t.send_messages(['Hi', 'How', 'Are', 'You'])) # Send 2 or more messages consecutively
 
 t.quit() # You have to quit the driver after you have finished the automation
+```
+
+#### Instagram
+```python
+from instagram import InstagramAutomation
+
+i = InstagramAutomation('Username', 'Password') # Creating an instance of the class, passing your
+# username or email and your password as strings parameters
+
+i.change_recipient('Any name') # Changing the recipient of the message by providing the username
+
+print(i.send_message('Hello', times=3)) # Send a message a number of times, default is 1 time
+
+print(i.send_messages(['Hi', 'How', 'Are', 'You'])) # Send 2 or more messages consecutively
+
+i.quit() # You have to quit the driver after you have finished the automation
 ```
