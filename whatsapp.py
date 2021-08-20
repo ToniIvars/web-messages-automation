@@ -50,7 +50,7 @@ class WhatsappAutomation:
         self.search_bar.send_keys(name)
 
         try:
-            WebDriverWait(self.driver, 5).until(lambda s: s.find_element_by_class_name('i0jNr'))
+            WebDriverWait(self.driver, 5).until(lambda s: s.find_element_by_css_selector('._1JFry > span:nth-child(1)'))
             self.driver.quit()
             raise UsernameError('Name not found')
         except TimeoutException:
