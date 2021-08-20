@@ -16,8 +16,12 @@ class UsernameError(Exception):
         super().__init__(self.message)
 
 class WhatsappAutomation:
-    def __init__(self):
-        self.driver = webdriver.Firefox()
+    def __init__(self, path=None):
+        if path:
+            self.driver = webdriver.Firefox(executable_path=path)
+        else:
+            self.driver = webdriver.Firefox()
+
         self.driver.get(f'https://web.whatsapp.com/')
 
         print('Read the QR code with your phone, please (this will only occur once).')

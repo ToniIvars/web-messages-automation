@@ -17,11 +17,15 @@ class MessageError(Exception):
         super().__init__(self.message)
 
 class InstagramAutomation:
-    def __init__(self, username, password):
+    def __init__(self, username, password, path=None):
         opt = Options()
         opt.add_argument('--headless')
 
-        self.driver = webdriver.Firefox(options=opt)
+        if path:
+            self.driver = webdriver.Firefox(options=opt, executable_path=path)
+        else:
+            self.driver = webdriver.Firefox(options=opt)
+            
         self.driver.get('https://www.instagram.com/accounts/login')
 
         WebDriverWait(self.driver, 5).until(lambda s: s.find_element_by_css_selector('button.aOOlW.bIiDR')).click()
