@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import TimeoutException
 
 import time
@@ -48,6 +47,7 @@ class InstagramAutomation:
 
     def change_recipient(self, username):
         if not username:
+            self.driver.quit()
             raise UsernameError('You have to enter a name')
 
         self.new_message_btn.click()
@@ -57,6 +57,7 @@ class InstagramAutomation:
         try:
             WebDriverWait(self.driver, 5).until(lambda s: s.find_element_by_class_name('_3wFWr'))
         except TimeoutException:
+            self.driver.quit()
             raise UsernameError('Name not found')
 
         WebDriverWait(self.driver, 5).until(lambda s: s.find_element_by_css_selector('div.-qQT3:nth-child(1)')).click()
@@ -69,8 +70,10 @@ class InstagramAutomation:
 
     def send_message(self, message, times=1):
         if not message:
+            self.driver.quit()
             raise MessageError('You have to enter a message')
         if times < 1:
+            self.driver.quit()
             raise MessageError('The minimum times are 1')
 
         self.message_input.send_keys(message)
@@ -82,6 +85,7 @@ class InstagramAutomation:
     
     def send_messages(self, messages):
         if not messages or len(messages) < 2:
+            self.driver.quit()
             raise MessageError('You have to enter 2 or more messages')
 
         for message in messages:

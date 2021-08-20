@@ -5,11 +5,6 @@ from selenium.common.exceptions import TimeoutException
 
 import time
 
-class InvalidPhoneError(Exception):
-    def __init__(self):
-        self.message = 'The phone number is invalid'
-        super().__init__(self.message)
-
 class MessageError(Exception):
     def __init__(self, message):
         self.message = message

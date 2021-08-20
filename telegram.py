@@ -88,6 +88,7 @@ class TelegramAutomation:
 
     def change_recipient(self, name):
         if not name:
+            self.driver.quit()
             raise UsernameError('You have to enter a name')
 
         self.search_bar.click()
@@ -97,6 +98,7 @@ class TelegramAutomation:
         try:
             WebDriverWait(self.driver, 5).until(lambda s: s.find_element_by_class_name('search-section'))
         except TimeoutException:
+            self.driver.quit()
             raise UsernameError('Name not found')
 
         self.search_bar.send_keys(Keys.ENTER)
@@ -106,8 +108,10 @@ class TelegramAutomation:
 
     def send_message(self, message, times=1):
         if not message:
+            self.driver.quit()
             raise MessageError('You have to enter a message')
         if times < 1:
+            self.driver.quit()
             raise MessageError('The minimum times are 1')
 
         inp = self.driver.find_element_by_id('editable-message-text')
@@ -122,6 +126,7 @@ class TelegramAutomation:
     
     def send_messages(self, messages):
         if not messages or len(messages) < 2:
+            self.driver.quit()
             raise MessageError('You have to enter 2 or more messages')
 
         inp = self.driver.find_element_by_id('editable-message-text')
